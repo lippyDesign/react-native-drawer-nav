@@ -1,0 +1,40 @@
+.brand-logo {
+    margin-left: 5px;
+}
+.activeMenu {
+    background: #616161;
+}
+.jumboron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-image: url("");
+    background-position: right;
+}
+.mobileNav {
+    display: block;
+    font-size: 23px;
+    width: 100%;
+    margin-top:0;
+}
+.mobileNav li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.mobileNav li a{
+    color: white;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+.displayNone {
+    display: none;
+}
+.displayBlock {
+    display: block;
+}
+.colorWhite {
+    color: white;
+}
+.callNow {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

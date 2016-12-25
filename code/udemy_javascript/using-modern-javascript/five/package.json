@@ -1,0 +1,19 @@
+{
+  "name": "five",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pregreeting": "echo \"BEFORE greeting\"",
+    "greeting": "echo \"Hello, World\"",
+    "postgreeting": "echo \"AFTER greeting\"",
+    "lint": "jshint ./server.js --show-non-errors"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jshint": "^2.9.4"
+  }
+}

@@ -1,0 +1,15 @@
+li {
+    display: inline-block;
+    padding: 15px 10px;
+    border-radius: 5px;
+}
+li a {
+    text-decoration: none;
+    color: tomato;
+}
+.active {
+    background-color: tomato;
+}
+.active a {
+    color: white;
+}

@@ -1,0 +1,34 @@
+.video-detail {
+    width: 32%;
+    margin: 10px 0;
+    background: lighten(@gray-teal-color, 10%);
+
+    @media(max-width: 991px) {
+        width: 48%;
+    }
+    @media(max-width: 767px) {
+        width: 98%;
+    }
+
+    ul {
+        padding: 0 0 10px 10px;
+        text-align: left;
+
+        li {
+            list-style-type: none;
+
+            .fa-eye {
+                color: @blue-color;
+            }
+            .fa-thumbs-up {
+                color: darken(@teal-color, 10%);
+            }
+            .fa-thumbs-down {
+                color: @red-color;
+            }
+            .fa-comment {
+                color: lighten(@blue-color, 5%);
+            }
+        }
+    }
+}

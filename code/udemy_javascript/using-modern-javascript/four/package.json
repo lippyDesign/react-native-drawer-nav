@@ -1,0 +1,17 @@
+{
+  "name": "example-1",
+  "version": "1.0.0",
+  "description": "this is an example project",
+  "main": "server.js",
+  "author": "Volodymyr Lipunov",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "3.10.1",
+    "moment": "^2.15.2",
+    "react": "^15.3.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "peerDependencies": {}
+}

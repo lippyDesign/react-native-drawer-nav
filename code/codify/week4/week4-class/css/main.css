@@ -1,0 +1,8 @@
+.rubberBand {
+  animation-duration: 10s;
+}
+@media(max-width: 900px) {
+  body {
+    background-color: pink;
+  }
+}

@@ -1,0 +1,125 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
+}
+.jumbotron {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+#signupButton {
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+}
+a:hover {
+    text-decoration: none;
+}
+.genderSelector, .birthdaySelector {
+    margin-left: 0;
+    margin-top: 10px;
+    color: rgb(158, 158, 158);
+    font-weight: bold;
+}
+.gender_to_sign_up {
+    padding: 5px 10px 5px 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 20px;
+}
+.userSelectionBackground {
+    background-color: #00bfa5;
+    color: white;
+    border-radius: 50%;
+}
+.userSelectionBackground:active {
+    color: white;
+}
+.spinnerPadding {
+    padding-top: 45px;
+    padding-bottom: 45px;
+}
+.isInvisible {
+    visibility: hidden;
+}
+.sideNav {
+    position: fixed;
+    top: 65px;
+    display: inline-block;
+    z-index: 100;
+}
+.sideNav li {
+    padding: 10px;
+    text-align: center;
+}
+.displayNone {
+    display: none;
+}
+.uploadImageButton {
+    margin-right: 10px;
+    cursor: pointer;
+}
+.postInfo li {
+    display: inline;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+#one {
+    color: #01579b;
+}
+#two {
+    color: #0277bd;
+}
+#three {
+    color: #0288d1;
+}
+#four {
+    color: #424242;
+}
+#five {
+    color: #ffc107;
+}
+#six {
+    color: #f57c00;
+}
+#seven {
+    color: #f4511e;
+}
+#eight {
+    color: #f44336;
+}
+#nine {
+    color: #e53935;
+}
+card {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+.postPadding {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.adPadding {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.displayInline li {
+    display: inline;
+}
+.activeBorder {
+    border-bottom: 4px solid #00bfa5;
+}
+.fontSizeEighteen {
+    font-size: 18px;
+}
+.marginSidesFive {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.paddingSidesFive {
+    padding-left: 5px;
+    padding-right: 5px;
+}

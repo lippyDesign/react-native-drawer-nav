@@ -1,0 +1,14 @@
+{
+  "name": "seven-less",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "styles": "lessc --source-map-map-inline site.less site.css"
+  },
+  "author": "Volodymyr Lipunov",
+  "license": "ISC",
+  "devDependencies": {
+    "less": "^2.7.1"
+  }
+}

@@ -1,0 +1,32 @@
+@blue-color: #1D7AA2;
+@teal-color: #6DC1B3;
+@gray-teal-color: #B1DCBE;
+@yellow-color: #F3FFBA;
+@red-color: #FF0850;
+
+.body {
+    background-color: lighten(@gray-teal-color, 20%);
+
+    .app {
+        text-align: center;
+
+        h1 {
+            padding: 50px 0 0 0;
+            .custom-font(50px, 100, @blue-color);
+        }
+        h2 {
+            padding: 0 0 50px 0;
+            .custom-font(30px, 100, darken(@blue-color, 5%));
+        }
+        section {
+            border-top: 1px solid @teal-color;
+            padding: 35px 0;
+        }
+    }
+}
+
+@import "./mixins";
+@import "../src/containers/youtube/youtube";
+@import "../src/components/videoDetail/videoDetail";
+@import "../src/containers/twitter/twitter";
+@import "../src/components/twitterDetail/twitterDetail";

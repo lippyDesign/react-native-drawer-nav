@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-import { loginEmailChanged, loginPasswordChanged, loginUser } from '../actions';
+import { recoveryEmailChanged, recoverAccountTapped } from '../actions';
 import { Card, CardSection, Input, Button, Spinner } from './common';
 
 class ForgotPassword extends Component {
     onButtonPress() {
-        const { loginEmailText, loginPasswordText } = this.props;
+        const { recoveryEmail } = this.props;
 
-        this.props.loginUser({ loginEmailText, loginPasswordText });
+        this.props.recoverAccountTapped({ recoveryEmail });
     }
 
-    emailTextChanged(text) {
-        this.props.loginEmailChanged(text);
-    }
-
-    passwordTextChanged(text) {
-        this.props.loginPasswordChanged(text);
+    recoveryEmailTextChanged(text) {
+        this.props.recoveryEmailChanged(text);
     }
 
     renderButton() {
@@ -26,7 +22,7 @@ class ForgotPassword extends Component {
 
         return (
             <Button onPress={this.onButtonPress.bind(this)}>
-                Login
+                Send Password
             </Button>
         );
     }
@@ -38,23 +34,13 @@ class ForgotPassword extends Component {
                     <Input
                         label="Email"
                         placeholder="email@email.com"
-                        onChangeText={this.emailTextChanged.bind(this)}
-                        value={this.props.loginEmailText}
-                    />
-                </CardSection>
-
-                <CardSection>
-                    <Input
-                        secureTextEntry
-                        label="Password"
-                        placeholder="password"
-                        onChangeText={this.passwordTextChanged.bind(this)}
-                        value={this.props.loginPasswordText}
+                        onChangeText={this.recoveryEmailTextChanged.bind(this)}
+                        value={this.props.recoveryEmail}
                     />
                 </CardSection>
 
                 <Text style={styles.errorTextStyle}>
-                    {this.props.error}
+                    {this.props.helperMessage}
                 </Text>
 
                 <CardSection>
@@ -75,13 +61,12 @@ const styles = {
 
 const mapStateToProps = state => {
     const {
-        loginEmailText,
-        loginPasswordText,
-        loading,
-        error
+        recoveryEmail,
+        helperMessage,
+        loading
     } = state.auth;
 
-    return { loginEmailText, loginPasswordText, loading, error };
+    return { recoveryEmail, helperMessage, loading };
 };
 
-export default connect(mapStateToProps, { loginEmailChanged, loginPasswordChanged, loginUser })(ForgotPassword);
+export default connect(mapStateToProps, { recoveryEmailChanged, recoverAccountTapped })(ForgotPassword);

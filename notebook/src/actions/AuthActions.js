@@ -11,7 +11,12 @@ import {
     LOGIN_USER_FAIL,
     LOGIN_EMAIL_CHANGED,
     LOGIN_PASSWORD_CHANGED,
-    LOGIN_USER
+    LOGIN_USER,
+    RECOVERY_EMAIL_CHANGED,
+    RECOVER_ACCOUNT,
+    LOGOUT_USER_SUCCESS,
+    PASSWORD_SENT_SUCCESS,
+    PASSWORD_SENT_FAIL
 } from './types';
 
 /////////////////////////////////////////////////////// REGISTER ///////////////////////////////////
@@ -88,6 +93,59 @@ export const loginUser = ({ loginEmailText, loginPasswordText }) => {
     };
 };
 
+/////////////////////////////////////////////////////// LOG OUT ///////////////////////////////////
+
+export const logoutUser = () => {
+    return (dispatch) => {
+        firebase.auth().signOut()
+            .then(() => logoutUserSuccess(dispatch))
+            .catch(error => console.log(error));
+    };
+};
+
+/////////////////////////////////////////////////////// RECOVERY ///////////////////////////////////
+
+export const recoveryEmailChanged = (text) => (
+    {
+        type: RECOVERY_EMAIL_CHANGED,
+        payload: text
+    }
+);
+
+export const recoverAccountTapped = ({ recoveryEmail }) => {
+    return (dispatch) => {
+        dispatch({ type: RECOVER_ACCOUNT });
+
+        firebase.auth().sendPasswordResetEmail(recoveryEmail)
+            .then(() => sendPasswordSuccess(dispatch))
+            .catch(error => sendPasswordFail(dispatch, error));
+    };
+};
+
+///////////////////////////////////////////// CHECK IF LOGGED IN ///////////////////////////////////
+
+// export const checkIfLoggedIn = () => {
+//     return (dispatch) => {
+//         const user = firebase.auth().currentUser;
+
+//         if (user) {
+//             console.log(user)
+//         } else {
+//             console.log('no user')
+//         }
+//     };
+// };
+
+///////////////////////////////////////////// DELETE USER ///////////////////////////////////
+
+const user = firebase.auth().currentUser;
+
+export const deleteUser = (dispatch) => {
+    user.delete()
+        .then(() => console.log('user deleted'))
+        .catch(error => console.log(error));
+};
+
 /////////////////////////////////////////////////////// HELPERS ///////////////////////////////////
 
 const loginUserFail = (dispatch, error) => {
@@ -98,5 +156,28 @@ const loginUserFail = (dispatch, error) => {
 
 const loginUserSuccess = (dispatch, user) => {
     dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
-    Actions.main();
+    Actions.main({ type: 'reset' });
+};
+
+const logoutUserSuccess = (dispatch) => {
+    dispatch({ type: LOGOUT_USER_SUCCESS });
+    Actions.auth({ type: 'reset' });
+};
+
+const sendPasswordSuccess = (dispatch) => {
+    dispatch({ type: PASSWORD_SENT_SUCCESS });
+};
+
+const sendPasswordFail = (dispatch, error) => {
+    let message;
+
+    if (error.code === 'auth/invalid-email') {
+        message = 'Invalid Email';
+    } else if (error.code === 'auth/user-not-found') {
+        message = 'User Not Found';
+    } else {
+        message = 'Password Reset Failed';
+    }
+
+    dispatch({ type: PASSWORD_SENT_FAIL, payload: message });
 };

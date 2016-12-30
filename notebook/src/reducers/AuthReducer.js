@@ -9,7 +9,13 @@ import {
     LOGIN_USER_FAIL,
     LOGIN_EMAIL_CHANGED,
     LOGIN_PASSWORD_CHANGED,
-    LOGIN_USER
+    LOGIN_USER,
+    RECOVERY_EMAIL_CHANGED,
+    RECOVER_ACCOUNT,
+    LOGOUT_USER_SUCCESS,
+    PASSWORD_SENT_SUCCESS,
+    PASSWORD_SENT_FAIL
+
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -18,9 +24,12 @@ const INITIAL_STATE = {
     registerConfirmPasswordText: '',
     loginEmailText: '',
     loginPasswordText: '',
-    user: null,
+    //user: null,
     error: '',
-    loading: false
+    loading: false,
+    loggingOut: false,
+    recoveryEmail: '',
+    helperMessage: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -66,6 +75,16 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, loginPasswordText: action.payload };
         case LOGIN_USER:
             return { ...state, loading: true, error: '' };
+        case RECOVERY_EMAIL_CHANGED:
+            return { ...state, recoveryEmail: action.payload };
+        case RECOVER_ACCOUNT:
+            return { ...state, loading: true, error: '', helperMessage: '' };
+        case LOGOUT_USER_SUCCESS:
+            return { ...state, loggingOut: false };
+        case PASSWORD_SENT_SUCCESS:
+            return { ...state, ...INITIAL_STATE, helperMessage: 'Password Sent' };
+        case PASSWORD_SENT_FAIL:
+            return { ...state, ...INITIAL_STATE, helperMessage: action.payload };
         default:
             return state;
     }

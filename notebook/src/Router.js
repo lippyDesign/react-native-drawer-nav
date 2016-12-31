@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
 import LoginForm from './components/LoginForm';
 import ForgotPassword from './components/ForgotPassword';
 import RegisterForm from './components/RegisterForm';
 import NotesList from './components/NotesList';
 import NoteCreate from './components/NoteCreate';
 import NoteEdit from './components/NoteEdit';
-import { logoutUser } from './actions';
+import Account from './components/Account';
 
 class RouterComponent extends Component {
-    componentDidMount() {
-        
-    }
-
     render() {
         return (
             <Router sceneStyle={{ paddingTop: 65 }}>
@@ -40,15 +35,16 @@ class RouterComponent extends Component {
                 </Scene>
 
                 <Scene key="main">
+                    <Scene key="account" component={Account} title="Account" />
                     <Scene
                         key="notesList"
                         component={NotesList}
                         title="Notes"
                         onRight={() => Actions.noteCreate()}
                         rightTitle="New"
-                        onLeft={() => this.props.logoutUser()}
-                        leftTitle='Logout'
-                        leftButtonTextStyle={{ color: 'red' }}
+                        rightButtonTextStyle={{ color: '#00CC66' }}
+                        onLeft={() => Actions.account()}
+                        leftTitle='Account'
                         initial
                     />
                     <Scene key="noteCreate" component={NoteCreate} title="New Note" />
@@ -59,4 +55,4 @@ class RouterComponent extends Component {
     }
 }
 
-export default connect(null, { logoutUser })(RouterComponent);
+export default RouterComponent;

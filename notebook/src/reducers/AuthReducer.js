@@ -14,7 +14,14 @@ import {
     RECOVER_ACCOUNT,
     LOGOUT_USER_SUCCESS,
     PASSWORD_SENT_SUCCESS,
-    PASSWORD_SENT_FAIL
+    PASSWORD_SENT_FAIL,
+    DELETE_ACCOUNT_PASSWORD_CHANGED,
+    CHANGE_PASSWORD_OLD_CHANGED,
+    CHANGE_PASSWORD_NEW_CHANGED,
+    CHANGE_PASSWORD_NEW_CONFIRM_CHANGED,
+    SHOW_CHANGE_PASSWORD,
+    HIDE_CHANGE_PASSWORD,
+    PASSWORD_RESET_SUCCESS
 
 } from '../actions/types';
 
@@ -24,12 +31,17 @@ const INITIAL_STATE = {
     registerConfirmPasswordText: '',
     loginEmailText: '',
     loginPasswordText: '',
-    //user: null,
+    user: null,
     error: '',
     loading: false,
     loggingOut: false,
     recoveryEmail: '',
-    helperMessage: ''
+    helperMessage: '',
+    deleteAccountPasswordText: '',
+    changePasswordTextOld: '',
+    changePasswordTextNew: '',
+    changePasswordTextNewConfirm: '',
+    showPasswordChangeModal: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -85,6 +97,20 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, ...INITIAL_STATE, helperMessage: 'Password Sent' };
         case PASSWORD_SENT_FAIL:
             return { ...state, ...INITIAL_STATE, helperMessage: action.payload };
+        case DELETE_ACCOUNT_PASSWORD_CHANGED:
+            return { ...state, deleteAccountPasswordText: action.payload };
+        case SHOW_CHANGE_PASSWORD:
+            return { ...state, showPasswordChangeModal: true };
+        case HIDE_CHANGE_PASSWORD:
+            return { ...state, showPasswordChangeModal: false };
+        case CHANGE_PASSWORD_OLD_CHANGED:
+            return { ...state, changePasswordTextOld: action.payload };
+        case CHANGE_PASSWORD_NEW_CHANGED:
+            return { ...state, changePasswordTextNew: action.payload };
+        case CHANGE_PASSWORD_NEW_CONFIRM_CHANGED:
+            return { ...state, changePasswordTextNewConfirm: action.payload };
+        case PASSWORD_RESET_SUCCESS:
+            return { ...state, ...INITIAL_STATE, user: action.payload };
         default:
             return state;
     }

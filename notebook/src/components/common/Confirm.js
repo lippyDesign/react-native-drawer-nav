@@ -21,7 +21,7 @@ const Confirm = ({ children, visible, onAccept, onDecline }) => {
                 </CardSection>
 
                 <CardSection>
-                    <Button onPress={onAccept}>Yes</Button>
+                    <Button onPress={onAccept} additionalStyles={styles.deleteStyle}>Yes</Button>
                     <Button onPress={onDecline}>No</Button>
                 </CardSection>
             </View>
@@ -44,6 +44,14 @@ const styles = {
         position: 'relative',
         flex: 1,
         justifyContent: 'center'
+    },
+    deleteStyle: {
+        borderStyle: {
+            borderColor: '#ff0000'
+        },
+        textStyle: {
+            color: '#ff0000'
+        }
     }
 };
 

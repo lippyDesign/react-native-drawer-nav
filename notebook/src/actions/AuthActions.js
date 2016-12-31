@@ -16,7 +16,14 @@ import {
     RECOVER_ACCOUNT,
     LOGOUT_USER_SUCCESS,
     PASSWORD_SENT_SUCCESS,
-    PASSWORD_SENT_FAIL
+    PASSWORD_SENT_FAIL,
+    DELETE_ACCOUNT_PASSWORD_CHANGED,
+    CHANGE_PASSWORD_OLD_CHANGED,
+    CHANGE_PASSWORD_NEW_CHANGED,
+    CHANGE_PASSWORD_NEW_CONFIRM_CHANGED,
+    PASSWORD_RESET_SUCCESS,
+    SHOW_CHANGE_PASSWORD,
+    HIDE_CHANGE_PASSWORD
 } from './types';
 
 /////////////////////////////////////////////////////// REGISTER ///////////////////////////////////
@@ -93,7 +100,7 @@ export const loginUser = ({ loginEmailText, loginPasswordText }) => {
     };
 };
 
-/////////////////////////////////////////////////////// LOG OUT ///////////////////////////////////
+/////////////////////////////////////////////////////// ACCOUNT ///////////////////////////////////
 
 export const logoutUser = () => {
     return (dispatch) => {
@@ -102,6 +109,83 @@ export const logoutUser = () => {
             .catch(error => console.log(error));
     };
 };
+
+export const deleteUser = (deleteAccountPasswordText) => {
+    const { currentUser } = firebase.auth();
+    const credential = firebase.auth.EmailAuthProvider.credential(
+        currentUser.email, 
+        deleteAccountPasswordText
+    );
+    return (dispatch) => {
+        currentUser.reauthenticate(credential)
+            .then(() => {
+                currentUser.delete()
+                    .then(() => logoutUserSuccess(dispatch))
+                    .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error));
+    };
+};
+
+export const changePassword = (oldPassword, changePasswordText, changePasswordTextConfirm) => {
+    if (changePasswordText === changePasswordTextConfirm && changePasswordText.length > 5) {
+        const { currentUser } = firebase.auth();
+        const credential = firebase.auth.EmailAuthProvider.credential(
+            currentUser.email, 
+            oldPassword
+        );
+        return (dispatch) => {
+            currentUser.reauthenticate(credential)
+                .then(() => {
+                    currentUser.updatePassword(changePasswordText)
+                        .then(() => passwordResetSuccess(dispatch, currentUser))
+                        .catch(error => console.log(error));
+                })
+                .catch(error => console.log(error));
+        };
+    }
+    return (dispatch) => console.log('auth failed');
+};
+
+export const deleteAccountPasswordChanged = (text) => (
+    {
+        type: DELETE_ACCOUNT_PASSWORD_CHANGED,
+        payload: text
+    }
+);
+
+export const showChangePassword = () => (
+    {
+        type: SHOW_CHANGE_PASSWORD
+    }
+);
+
+export const hideChangePassword = () => (
+    {
+        type: HIDE_CHANGE_PASSWORD
+    }
+);
+
+export const changePasswordOldChanged = (text) => (
+    {
+        type: CHANGE_PASSWORD_OLD_CHANGED,
+        payload: text
+    }
+);
+
+export const changePasswordNewChanged = (text) => (
+    {
+        type: CHANGE_PASSWORD_NEW_CHANGED,
+        payload: text
+    }
+);
+
+export const changePasswordNewConfirmChanged = (text) => (
+    {
+        type: CHANGE_PASSWORD_NEW_CONFIRM_CHANGED,
+        payload: text
+    }
+);
 
 /////////////////////////////////////////////////////// RECOVERY ///////////////////////////////////
 
@@ -135,16 +219,6 @@ export const recoverAccountTapped = ({ recoveryEmail }) => {
 //         }
 //     };
 // };
-
-///////////////////////////////////////////// DELETE USER ///////////////////////////////////
-
-const user = firebase.auth().currentUser;
-
-export const deleteUser = (dispatch) => {
-    user.delete()
-        .then(() => console.log('user deleted'))
-        .catch(error => console.log(error));
-};
 
 /////////////////////////////////////////////////////// HELPERS ///////////////////////////////////
 
@@ -180,4 +254,9 @@ const sendPasswordFail = (dispatch, error) => {
     }
 
     dispatch({ type: PASSWORD_SENT_FAIL, payload: message });
+};
+
+const passwordResetSuccess = (dispatch, user) => {
+    dispatch({ type: PASSWORD_RESET_SUCCESS, payload: user });
+    Actions.main({ type: 'reset' });
 };

@@ -18,14 +18,6 @@ class App extends Component {
 		};
 
 		firebase.initializeApp(config);
-
-		const user = firebase.auth().currentUser;
-
-        if (user) {
-            console.log(user)
-        } else {
-            console.log('no user')
-        }
 	}
 
 	render() {

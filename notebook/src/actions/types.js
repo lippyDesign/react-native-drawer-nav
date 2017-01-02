@@ -1,3 +1,6 @@
+
+///////////////////////////////////////////////////// AUTH TYPES ///////////////////////////////////
+
 export const REGISTER_EMAIL_CHANGED = 'REGISTER_EMAIL_CHANGED';
 export const REGISTER_PASSWORD_CHANGED = 'REGISTER_PASSWORD_CHANGED';
 export const REGISTER_CONFIRM_PASSWORD_CHANGED = 'REGISTER_CONFIRM_PASSWORD_CHANGED';
@@ -21,3 +24,12 @@ export const CHANGE_PASSWORD_NEW_CONFIRM_CHANGED = 'CHANGE_PASSWORD_NEW_CONFIRM_
 export const PASSWORD_RESET_SUCCESS = 'PASSWORD_RESET_SUCCESS';
 export const SHOW_CHANGE_PASSWORD = 'SHOW_CHANGE_PASSWORD';
 export const HIDE_CHANGE_PASSWORD = 'HIDE_CHANGE_PASSWORD';
+
+///////////////////////////////////////////////////// NOTE TYPES ///////////////////////////////////
+
+export const NOTE_HEADING_CHANGED = 'NOTE_HEADING_CHANGED';
+export const NOTE_CONTENT_CHANGED = 'NOTE_CONTENT_CHANGED';
+export const NOTE_CREATE = 'NOTE_CREATE';
+export const NOTES_FETCH_SUCCESS = 'NOTES_FETCH_SUCCESS';
+export const NOTE_UPDATE = 'NOTE_UPDATE';
+export const NOTE_SAVE_SUCCESS = 'NOTE_SAVE_SUCCESS';

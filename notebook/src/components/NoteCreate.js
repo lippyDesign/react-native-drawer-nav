@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { Card } from './common';
+import NoteForm from './NoteForm';
 
 class NoteCreate extends Component {
+
     render() {
         return (
-            <View>
-                <Text>This is the create notes form</Text>
-            </View>
+            <Card>
+                <NoteForm />
+            </Card>
         );
     }
 }

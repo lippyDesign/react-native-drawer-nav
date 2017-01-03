@@ -6,7 +6,8 @@ import {
     NOTE_CREATE,
     NOTES_FETCH_SUCCESS,
     NOTE_UPDATE,
-    NOTE_SAVE_SUCCESS
+    NOTE_SAVE_SUCCESS,
+    NOTE_VIEW_CHANGED
 } from './types';
 
 export const noteHeadingChanged = (text) => (
@@ -24,6 +25,7 @@ export const noteContentChanged = (text) => (
 );
 
 export const noteCreate = ({ noteHeadingText, noteContentText }) => {
+    console.log('running noteCreate');
     const { currentUser } = firebase.auth();
 
     return (dispatch) => {
@@ -78,3 +80,10 @@ export const noteDelete = ({ uid }) => {
             });
     };
 };
+
+export const setCurrentNoteView = (uid) => (
+    {
+        type: NOTE_VIEW_CHANGED,
+        payload: uid
+    }
+);

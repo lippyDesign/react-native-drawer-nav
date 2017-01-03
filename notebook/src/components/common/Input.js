@@ -1,16 +1,27 @@
 import React from 'react';
 import { TextInput, View, Text } from 'react-native';
 
-const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
+const Input = ({ label, value, onChangeText, placeholder, secureTextEntry, additionalStyles }) => {
     const { inputStyle, labelStyle, containerStyle } = styles;
+
+    let cntStyle = containerStyle;
+    let lblStyle = labelStyle;
+    let inptStyle = inputStyle;
+
+    if (additionalStyles) {
+        cntStyle = additionalStyles.containerStyle ? [containerStyle, additionalStyles.containerStyle] : containerStyle;
+        lblStyle = additionalStyles.labelStyle ? [labelStyle, additionalStyles.labelStyle] : labelStyle;
+        inptStyle = additionalStyles.inputStyle ? [inputStyle, additionalStyles.inputStyle] : inputStyle;
+    }
+
     return (
-        <View style={containerStyle}>
-            <Text style={labelStyle}>{label}</Text>
+        <View style={cntStyle}>
+            <Text style={lblStyle}>{label}</Text>
             <TextInput
                 secureTextEntry={secureTextEntry}
                 placeholder={placeholder}
                 autoCorrect={false}
-                style={inputStyle}
+                style={inptStyle}
                 value={value}
                 onChangeText={onChangeText}
             />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 import {
     registerEmailChanged,
@@ -43,44 +43,50 @@ class RegisterForm extends Component {
 
     render() {
         return (
-            <Card>
-                <CardSection>
-                    <Input
-                        label="Email"
-                        placeholder="email@email.com"
-                        onChangeText={this.emailTextChanged.bind(this)}
-                        value={this.props.registerEmailText}
-                    />
-                </CardSection>
+            <View>
+                <Card>
+                    <CardSection>
+                        <Input
+                            label="Email"
+                            placeholder="email@email.com"
+                            onChangeText={this.emailTextChanged.bind(this)}
+                            value={this.props.registerEmailText}
+                        />
+                    </CardSection>
 
-                <CardSection>
-                    <Input
-                        secureTextEntry
-                        label="Password"
-                        placeholder="password"
-                        onChangeText={this.passwordTextChanged.bind(this)}
-                        value={this.props.registerPasswordText}
-                    />
-                </CardSection>
+                    <CardSection>
+                        <Input
+                            secureTextEntry
+                            label="Password"
+                            placeholder="password"
+                            onChangeText={this.passwordTextChanged.bind(this)}
+                            value={this.props.registerPasswordText}
+                        />
+                    </CardSection>
 
-                <CardSection>
-                    <Input
-                        secureTextEntry
-                        label="Confirm Password"
-                        placeholder="confirm password"
-                        onChangeText={this.confirmPasswordTextChanged.bind(this)}
-                        value={this.props.registerConfirmPasswordText}
-                    />
-                </CardSection>
+                    <CardSection>
+                        <Input
+                            secureTextEntry
+                            label="Confirm Password"
+                            placeholder="confirm password"
+                            onChangeText={this.confirmPasswordTextChanged.bind(this)}
+                            value={this.props.registerConfirmPasswordText}
+                        />
+                    </CardSection>
 
-                <Text style={styles.errorTextStyle}>
-                    {this.props.error}
-                </Text>
+                    <Text style={styles.errorTextStyle}>
+                        {this.props.error}
+                    </Text>
 
-                <CardSection>
-                    {this.renderButton()}
-                </CardSection>
-            </Card>
+                    <CardSection>
+                        {this.renderButton()}
+                    </CardSection>
+                </Card>
+                <Image
+                    style={styles.img}
+                    source={require('../img/Simplepad.png')}
+                />
+            </View>
         );
     }
 }
@@ -90,6 +96,12 @@ const styles = {
         fontSize: 20,
         alignSelf: 'center',
         color: 'red'
+    },
+    img: {
+        width: 220,
+        height: 220,
+        alignSelf: 'center',
+        marginTop: 20
     }
 };
 

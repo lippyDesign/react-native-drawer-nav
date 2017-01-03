@@ -3,7 +3,7 @@ import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { CardSection } from './common';
 
-export default class ListItem extends Component {
+class ListItem extends Component {
     onRowPress() {
         Actions.noteEdit({ note: this.props.note });
     }
@@ -30,3 +30,5 @@ const styles = {
         paddingLeft: 15
     }
 };
+
+export default ListItem;

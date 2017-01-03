@@ -8,10 +8,10 @@ import NotesList from './components/NotesList';
 import NoteCreate from './components/NoteCreate';
 import NoteEdit from './components/NoteEdit';
 import Account from './components/Account';
-import { noteCreate } from './actions';
+import { noteCreate, noteSave } from './actions';
 
 class RouterComponent extends Component {
-    saveNote() {
+    createNote() {
         const { noteHeadingText, noteContentText } = this.props;
 
         if (noteHeadingText.trim() === '') {
@@ -21,6 +21,11 @@ class RouterComponent extends Component {
         this.props.noteCreate({ noteHeadingText, noteContentText });
     }
 
+    saveNoteChanges() {
+        const { noteHeadingText, noteContentText, currentNote } = this.props;
+        this.props.noteSave({ noteHeadingText, noteContentText, uid: currentNote });
+    }
+
     render() {
         return (
             <Router sceneStyle={{ paddingTop: 65 }}>
@@ -28,7 +33,7 @@ class RouterComponent extends Component {
                     <Scene
                         key="register"
                         component={RegisterForm}
-                        title="Please Register"
+                        title="Register"
                         onRight={() => Actions.login()}
                         rightTitle="Login"
                         initial
@@ -36,7 +41,7 @@ class RouterComponent extends Component {
                     <Scene
                         key="login"
                         component={LoginForm}
-                        title="Please Login"
+                        title="Login"
                         onRight={() => Actions.forgotPassword()}
                         rightTitle="Forgot?"
                     />
@@ -47,11 +52,10 @@ class RouterComponent extends Component {
                 </Scene>
 
                 <Scene key="main">
-                    <Scene key="account" component={Account} title="Account" />
                     <Scene
                         key="notesList"
                         component={NotesList}
-                        title="Notes"
+                        title="My Notes"
                         onRight={() => Actions.noteCreate()}
                         rightTitle="New"
                         rightButtonTextStyle={{ color: '#00CC66' }}
@@ -60,12 +64,24 @@ class RouterComponent extends Component {
                         initial
                     />
                     <Scene
+                        key="account"
+                        component={Account}
+                        title="Account"
+                        direction='vertical'
+                    />
+                    <Scene
                         key="noteCreate" component={NoteCreate}
                         title="New Note"
-                        onRight={this.saveNote.bind(this)}
+                        onRight={this.createNote.bind(this)}
                         rightTitle='Save'
                     />
-                    <Scene key="noteEdit" component={NoteEdit} title="Note Details" />
+                    <Scene
+                        key="noteEdit"
+                        component={NoteEdit}
+                        title="Note Details"
+                        onRight={this.saveNoteChanges.bind(this)}
+                        rightTitle='Save'
+                    />
                 </Scene>
             </Router>
         );
@@ -73,9 +89,9 @@ class RouterComponent extends Component {
 }
 
 const mapStateToProps = state => {
-    const { noteHeadingText, noteContentText } = state.note;
+    const { noteHeadingText, noteContentText, currentNote } = state.note;
 
-    return { noteHeadingText, noteContentText };
+    return { noteHeadingText, noteContentText, currentNote };
 };
 
-export default connect(mapStateToProps, { noteCreate })(RouterComponent);
+export default connect(mapStateToProps, { noteCreate, noteSave })(RouterComponent);

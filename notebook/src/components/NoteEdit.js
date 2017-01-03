@@ -3,13 +3,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
 import NoteForm from './NoteForm';
-import { noteUpdate, noteSave, noteDelete } from '../actions';
+import { noteUpdate, noteSave, noteDelete, setCurrentNoteView } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
 
 class NoteEdit extends Component {
     state = { showModal: false }
 
     componentWillMount() {
+        const { uid } = this.props.note;
+
+        this.props.setCurrentNoteView(uid);
+
         _.each(this.props.note, (value, prop) => {
             this.props.noteUpdate({ prop, value });
         });
@@ -17,17 +21,29 @@ class NoteEdit extends Component {
 
     onButtonPress() {
         const { noteHeadingText, noteContentText } = this.props;
-        this.props.employeeSave({ noteHeadingText, noteContentText, uid: this.props.note.uid });
+        this.props.noteSave({ noteHeadingText, noteContentText, uid: this.props.note.uid });
+    }
+
+    onEmailPress() {
+        const { noteHeadingText, noteContentText } = this.props;
+
+        Communications.email(
+            null,
+            null,
+            null,
+            `Simple Notebook Note ${noteHeadingText}`,
+            `title: ${noteHeadingText}, Content: ${noteContentText}`
+        );
     }
 
     onTextPress() {
-        const { name, phone, shift } = this.props;
+        const { noteHeadingText, noteContentText } = this.props;
 
-        Communications.text(phone, `${name} your upcoming shift is on ${shift}`);
+        Communications.text(null, `Title: ${noteHeadingText}, Content: ${noteContentText}`);
     }
 
     onAccept() {
-        const { uid } = this.props.employee;
+        const { uid } = this.props.note;
 
         this.props.noteDelete({ uid });
     }
@@ -37,23 +53,28 @@ class NoteEdit extends Component {
     }
 
     render() {
+        const { textNoteStyle, deleteStyle } = styles;
+
         return (
             <Card>
                 <NoteForm />
                 <CardSection>
                     <Button onPress={this.onButtonPress.bind(this)}>
-                        Email Notes
+                        Email Note
                     </Button>
                 </CardSection>
 
                 <CardSection>
-                    <Button onPress={this.onTextPress.bind(this)}>
-                        Text Notes
+                    <Button onPress={this.onTextPress.bind(this)} additionalStyles={textNoteStyle}>
+                        Text Note
                     </Button>
                 </CardSection>
 
                 <CardSection>
-                    <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
+                    <Button
+                        onPress={() => this.setState({ showModal: !this.state.showModal })}
+                        additionalStyles={deleteStyle}
+                    >
                         Delete Note
                     </Button>
                 </CardSection>
@@ -70,10 +91,31 @@ class NoteEdit extends Component {
     }
 }
 
+const styles = {
+    textNoteStyle: {
+        borderStyle: {
+            borderColor: '#ff8000'
+        },
+        textStyle: {
+            color: '#ff8000'
+        }
+    },
+    deleteStyle: {
+        borderStyle: {
+            borderColor: '#ff0000'
+        },
+        textStyle: {
+            color: '#ff0000'
+        }
+    }
+};
+
 const mapStateToProps = (state) => {
     const { noteHeadingText, noteContentText } = state.note;
 
     return { noteHeadingText, noteContentText };
 };
 
-export default connect(mapStateToProps, { noteUpdate, noteSave, noteDelete })(NoteEdit);
+export default connect(mapStateToProps,
+    { noteUpdate, noteSave, noteDelete, setCurrentNoteView }
+)(NoteEdit);

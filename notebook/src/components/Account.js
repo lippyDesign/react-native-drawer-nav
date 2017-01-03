@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { CardSection, Card, Button, Confirm, Input } from './common';
 import {
     logoutUser,
@@ -54,8 +54,9 @@ class Account extends Component {
     }
 
     render() {
-        const { logoutStyle, deleteStyle, deleteAccountTextStyle } = styles;
+        const { logoutStyle, deleteStyle, deleteAccountTextStyle, img } = styles;
         return (
+            <View>
             <Card>
                 <CardSection>
                     <Button onPress={this.onLogoutPress.bind(this)} additionalStyles={logoutStyle}>
@@ -128,8 +129,12 @@ class Account extends Component {
                         />
                     </View>
                 </Confirm>
-
             </Card>
+            <Image
+                style={img}
+                source={require('../img/Simplepad.png')}
+            />
+            </View>
         );
     }
 }
@@ -155,6 +160,12 @@ const styles = {
         textStyle: {
             color: '#ff0000'
         }
+    },
+    img: {
+        width: 220,
+        height: 220,
+        alignSelf: 'center',
+        marginTop: 20
     }
 };
 

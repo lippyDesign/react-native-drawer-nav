@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ListView, View, Text } from 'react-native';
+import { ListView, View, Text, Image } from 'react-native';
 import _ from 'lodash';
 import { notesFetch } from '../actions';
 import ListItem from './ListItem';
@@ -32,7 +32,14 @@ class NotesList extends Component {
 
     render() {
         if (this.props.notes.length === 0) {
-            return <View><Text>No Notes Yet...</Text></View>;
+            return (
+                <View>
+                    <Text>No Notes Yet...</Text>
+                    <Image
+                        style={styles.img}
+                        source={require('../img/Simplepad.png')}
+                    />
+                </View>);
         }
         return (
             <ListView
@@ -43,6 +50,15 @@ class NotesList extends Component {
         );
     }
 }
+
+const styles = {
+    img: {
+        width: 220,
+        height: 220,
+        alignSelf: 'center',
+        marginTop: 20
+    }
+};
 
 const mapStateToProps = state => {
     const notes = _.map(state.notes, (val, uid) => {
